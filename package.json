@@ -11,5 +11,8 @@
     "url": "git+https://github.com/dliu84/fragments.git"
   },
   "author": "Di Liu",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "prettier": "3.1.1"
+  }
 }
