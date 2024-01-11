@@ -16,10 +16,10 @@ start the server using any of three methods:
 - npm run debug
 
 test the server can be started manually:
-	- node src/server.js
-	- browse to http://localhost:8080 to check
-	- OR: in another terminal, run: curl localhost:8080
+- node src/server.js
+- browse to http://localhost:8080 to check
+- OR: in another terminal, run: curl localhost:8080
 	
 use jq to format, query and transform JSON data:
-	- curl -s localhost:8080 | jq
+- curl -s localhost:8080 | jq
 
