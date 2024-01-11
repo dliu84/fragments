@@ -10,6 +10,7 @@ git status
 
 run eslint: 
 - npm run lint
+
 start the server using any of three methods: 
 - npm start
 - npm run dev
