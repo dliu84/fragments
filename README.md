@@ -1,7 +1,7 @@
 # fragments
 CCP555 course works - Lab 1
 
-##create a folder called src:
+###create a folder called src:
 	mkdir src
 
 ##git status
