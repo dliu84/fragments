@@ -2,18 +2,18 @@
 CCP555 course works - Lab 1
 
 - create a folder called src:
-	mkdir src
+- mkdir src
 
 - git status
-git add file_1 file_2 file_3 file_4
-git commit -m "message content"
+- git add file_1 file_2 file_3 file_4
+- git commit -m "message content"
 
 - run eslint: 
-	npm run lint
+- npm run lint
 - start the server using any of three methods: 
-	npm start
-	npm run dev
-	npm run debug
+- npm start
+- npm run dev
+- npm run debug
 
 - test the server can be started manually:
 	1. node src/server.js
