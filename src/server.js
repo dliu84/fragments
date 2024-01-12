@@ -14,9 +14,9 @@ const port = parseInt(process.env.PORT || '8080', 10);
 
 // when running with LOG_LEVEL=debug, modify the code so it prints print all of the process' environment variables
 // Make sure you don't do this unless the server is run with LOG_LEVEL=debug
-if (process.env.LOG_LEVEL === 'debug') {
-  console.log(process.env);
-}
+// if (process.env.LOG_LEVEL === 'debug') {
+//   console.log(process.env);
+// }
 
 // Start a server listening on this port
 const server = stoppable(
