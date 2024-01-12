@@ -24,3 +24,8 @@ test the server can be started manually:
 use jq to format, query and transform JSON data:
 - curl -s localhost:8080 | jq
 
+run debugger
+- set a break point in VScode
+- in VScode, run -> start debugging
+- in another terminal: curl localhost:8080, and the break point will be hit
+
