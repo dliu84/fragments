@@ -1,15 +1,25 @@
 # fragments
 CCP555 course works - Lab 1
 
+GitHub repo and local machine:
+- create a private GitHub repo, add README file and .gitignore for node file
+- in local machine, run:
+  - git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
+
+check staging tree, run:
+- git status
+
+add modified files to the staging tree, run
+- git add file_1 file_2 file_3 file_4
+
+commit the changes, run:
+- git commit -m "message content"
+
 create a folder called src, run:
 - mkdir src
 
 open VScode folder in terminal, run:
 - code .
-
-git status
-- git add file_1 file_2 file_3 file_4
-- git commit -m "message content"
 
 run eslint: 
 - npm run lint
