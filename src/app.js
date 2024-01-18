@@ -4,6 +4,8 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
+const passport = require('passport');
+const authenticate = require('./auth');
 
 // author and version from our package.json file
 // TODO: make sure you have updated your name in the `author` section
@@ -52,6 +54,13 @@ if (process.env.LOG_LEVEL === 'debug') {
 //     version,
 //   });
 // });
+
+// Use gzip/deflate compression middleware
+app.use(compression());
+
+// Set up our passport authentication middleware
+passport.use(authenticate.strategy());
+app.use(passport.initialize());
 // Define our routes
 app.use('/', require('./routes'));
 
