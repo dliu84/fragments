@@ -36,7 +36,8 @@ app.use(compression());
 // when running with LOG_LEVEL=debug, modify the code so it prints print all of the process' environment variables
 // Make sure you don't do this unless the server is run with LOG_LEVEL=debug
 if (process.env.LOG_LEVEL === 'debug') {
-  console.log(process.env);
+  //console.log(process.env);
+  //logger.info(process.env);
 }
 
 // Define a simple health check route. If the server is running
