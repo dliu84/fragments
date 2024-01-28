@@ -7,7 +7,6 @@ const compression = require('compression');
 const passport = require('passport');
 const authenticate = require('./auth');
 
-// step 42
 const { createErrorResponse } = require('./response');
 
 // author and version from our package.json file
@@ -53,15 +52,8 @@ app.use('/', require('./routes'));
 
 // Add 404 middleware to handle any requests for resources that can't be found
 app.use((req, res) => {
-  // res.status(404).json({
-  //   status: 'error',
-  //   error: {
-  //     message: 'not found',
-  //     code: 404,
-  //   },
-  // });
-
-  // step 42
+  // use the createSuccessResponse() and createErrorResponse() functions in src/response.js
+  // to rewrite all of the HTTP responses
   res.status(404).json(createErrorResponse(404, 'not found'));
 });
 
