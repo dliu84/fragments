@@ -19,9 +19,6 @@ describe('memory index', () => {
   });
 
   test('writeFragment() writes fragment metadata', async () => {
-    // await writeFragment(fragment);
-    // const result = await readFragment(ownerId, fragmentId);
-    // expect(result).toEqual(fragment);
     const fragment = { ownerId: 'owner123', id: 'fragment456', data: { value: 123 } };
     await writeFragment(fragment);
     const result = await readFragment('owner123', 'fragment456');
@@ -84,44 +81,7 @@ describe('memory index', () => {
     }
   });
 
-  // test('deleteFragment() deletes fragment metadata and data', async () => {
-  //   await writeFragment(fragment);
-  //   await writeFragmentData(ownerId, fragmentId, buffer);
-  //   // Delete fragment
-  //   await deleteFragment(ownerId, fragmentId);
-  //   // Check if fragment and its data are deleted
-  //   const resultMetadata = await readFragment(ownerId, fragmentId).catch(() => {}); // Gracefully handle error
-  //   const resultData = await readFragmentData(ownerId, fragmentId).catch(() => {}); // Gracefully handle error
-  //   expect(resultMetadata).toBeUndefined();
-  //   expect(resultData).toBeUndefined();
-  // });
-
-  // test('deleteFragment() deletes fragment metadata and data', async () => {
-  //   await writeFragment(fragment.ownerId, fragment.fragmentId, fragment);
-  //   await writeFragmentData(fragment.ownerId, fragment.fragmentId, buffer);
-  //   // Delete fragment
-  //   await deleteFragment(fragment.ownerId, fragment.fragmentId);
-  //   // Check if fragment and its data are deleted
-  //   const resultMetadata = await readFragment(fragment.ownerId, fragment.fragmentId).catch(
-  //     () => {}
-  //   ); // Gracefully handle error
-  //   const resultData = await readFragmentData(fragment.ownerId, fragment.fragmentId).catch(
-  //     () => {}
-  //   ); // Gracefully handle error
-  //   expect(resultMetadata).toBeUndefined();
-  //   expect(resultData).toBeUndefined();
-  // });
-
   test('deleteFragment() deletes fragment metadata and data', async () => {
-    // await writeFragment('owner123', 'fragment456', fragment);
-    // await writeFragmentData('owner123', 'fragment456', buffer);
-    // // Delete fragment
-    // await deleteFragment('owner123', 'fragment456');
-    // // Check if fragment and its data are deleted
-    // const resultMetadata = await readFragment('owner123', 'fragment456').catch(() => {}); // Gracefully handle error
-    // const resultData = await readFragmentData('owner123', 'fragment456').catch(() => {}); // Gracefully handle error
-    // expect(resultMetadata).toBeUndefined();
-    // expect(resultData).toBeUndefined();
     const fragment = { ownerId: 'owner123', id: 'fragment456', data: { value: 123 } };
     const buffer = Buffer.from([1, 2, 3]);
     await writeFragment(fragment);
@@ -136,18 +96,6 @@ describe('memory index', () => {
   });
 
   test('deleteFragment() throw if fragment does not exist in db', async () => {
-    expect(() => deleteFragment('a', 'c')).rejects.toThrow();
-  });
-
-  test('deleteFragment() does not throw if fragment does not exist', async () => {
-    // Try deleting a non-existent fragment
-    try {
-      await deleteFragment('owner123', 'nonExistentFragment');
-    } catch (error) {
-      // If an error is thrown, fail the test
-      expect(error.message).toBe(
-        'missing entry for primaryKey=owner123 and secondaryKey=nonExistentFragment'
-      );
-    }
+    expect(() => deleteFragment('owner123', 'nonExistentFragment')).rejects.toThrow();
   });
 });
