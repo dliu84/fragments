@@ -10,7 +10,6 @@ const {
 describe('memory index', () => {
   let ownerId = 'owner123';
   let fragmentId = 'fragment456';
-  //let fragment = { ownerId, fragmentId };
   let buffer = Buffer.from([1, 2, 3]);
 
   beforeEach(async () => {
@@ -26,15 +25,10 @@ describe('memory index', () => {
   });
 
   test('readFragment() reads fragment metadata', async () => {
-    try {
-      // Read the fragment
-      const result = await readFragment(ownerId, fragmentId);
-      // Expect the result to be undefined
-      expect(result).toBeUndefined();
-    } catch (error) {
-      // Gracefully handle error if the entry doesn't exist
-      expect(error).toBeUndefined();
-    }
+    // Read the fragment
+    const result = await readFragment(ownerId, fragmentId);
+    // Expect the result to be undefined
+    expect(result).toBeUndefined();
   });
 
   test('writeFragmentData() writes fragment data', async () => {
@@ -44,41 +38,26 @@ describe('memory index', () => {
   });
 
   test('readFragmentData() reads fragment data', async () => {
-    try {
-      // Read the fragment data
-      const result = await readFragmentData(ownerId, fragmentId);
-      // Expect the result to be undefined
-      expect(result).toBeUndefined();
-    } catch (error) {
-      // Gracefully handle error if the entry doesn't exist
-      expect(error).toBeUndefined();
-    }
+    // Read the fragment data
+    const result = await readFragmentData(ownerId, fragmentId);
+    // Expect the result to be undefined
+    expect(result).toBeUndefined();
   });
 
   test('listFragments() returns list of fragment ids', async () => {
-    try {
-      // List fragments
-      const result = await listFragments(ownerId);
-      // Expect the result to be an empty array
-      expect(Array.isArray(result)).toBe(true);
-      expect(result.length).toBe(0);
-    } catch (error) {
-      // Gracefully handle error if the entry doesn't exist
-      expect(error).toBeUndefined();
-    }
+    // List fragments
+    const result = await listFragments(ownerId);
+    // Expect the result to be an empty array
+    expect(Array.isArray(result)).toBe(true);
+    expect(result.length).toBe(0);
   });
 
   test('listFragments(expand=true) returns list of fragment objects', async () => {
-    try {
-      // List fragments with expand=true
-      const result = await listFragments(ownerId, true);
-      // Expect the result to be an empty array
-      expect(Array.isArray(result)).toBe(true);
-      expect(result.length).toBe(0);
-    } catch (error) {
-      // Gracefully handle error if the entry doesn't exist
-      expect(error).toBeUndefined();
-    }
+    // List fragments with expand=true
+    const result = await listFragments(ownerId, true);
+    // Expect the result to be an empty array
+    expect(Array.isArray(result)).toBe(true);
+    expect(result.length).toBe(0);
   });
 
   test('deleteFragment() deletes fragment metadata and data', async () => {
