@@ -16,7 +16,35 @@ const {
 
 class Fragment {
   constructor({ id, ownerId, created, updated, type, size = 0 }) {
-    // TODO
+    if (
+      (ownerId &&
+        type &&
+        Fragment.isSupportedType(type) &&
+        typeof size === 'number' &&
+        size >= 0) ||
+      /;\s*charset=/.test(type)
+    ) {
+      if (!size) {
+        this.size = 0;
+      } else {
+        this.size = size;
+      }
+      this.id = id || randomUUID();
+      this.ownerId = ownerId;
+      this.created = created || new Date().toString();
+      this.update = updated || new Date().toString();
+      this.type = type;
+      this.save();
+    } else {
+      if (!ownerId) {
+        throw new Error(`Fragment ownerId is missing`);
+      }
+      if (!type) {
+        throw new Error(`Fragment type is missing!`);
+      } else {
+        throw new Error('Fragment type or size is wrong!');
+      }
+    }
   }
 
   /**
@@ -26,7 +54,10 @@ class Fragment {
    * @returns Promise<Array<Fragment>>
    */
   static async byUser(ownerId, expand = false) {
-    // TODO
+    //return listFragments(ownerId, expand);
+
+    const fragments = await listFragments(ownerId, expand);
+    return fragments || [];
   }
 
   /**
@@ -36,7 +67,21 @@ class Fragment {
    * @returns Promise<Fragment>
    */
   static async byId(ownerId, id) {
-    // TODO
+    const fragment = await readFragment(ownerId, id);
+    if (!fragment) {
+      throw new Error(`Fragment ${id} is not found!`);
+    }
+
+    // construct a new Fragment instance
+    const newFragment = new Fragment({
+      id: fragment.id,
+      ownerId: fragment.ownerId,
+      created: fragment.created,
+      update: fragment.update,
+      type: fragment.type,
+      size: fragment.size,
+    });
+    return Promise.resolve(newFragment);
   }
 
   /**
@@ -46,7 +91,7 @@ class Fragment {
    * @returns Promise<void>
    */
   static delete(ownerId, id) {
-    // TODO
+    return deleteFragment(ownerId, id);
   }
 
   /**
@@ -54,7 +99,10 @@ class Fragment {
    * @returns Promise<void>
    */
   save() {
-    // TODO
+    // this.updated = new Date().toString();
+    // return writeFragment(this);
+    this.updated = new Date().toString();
+    return writeFragment(this);
   }
 
   /**
@@ -62,7 +110,7 @@ class Fragment {
    * @returns Promise<Buffer>
    */
   getData() {
-    // TODO
+    return readFragmentData(this.ownerId, this.id);
   }
 
   /**
@@ -71,7 +119,20 @@ class Fragment {
    * @returns Promise<void>
    */
   async setData(data) {
-    // TODO
+    // if (Buffer.isBuffer(data)) {
+    //   this.updated = new Date().toString();
+    //   this.size = Buffer.byteLength(data);
+    //   return writeFragmentData(this.ownerId, this.id, data);
+    // } else {
+    //   throw new Error(`Data is Empty!`);
+    // }
+    if (Buffer.isBuffer(data)) {
+      this.updated = new Date().toString();
+      this.size = Buffer.byteLength(data);
+      return writeFragmentData(this.ownerId, this.id, data);
+    } else {
+      throw new Error(`Data is Empty!`);
+    }
   }
 
   /**
@@ -82,6 +143,7 @@ class Fragment {
   get mimeType() {
     const { type } = contentType.parse(this.type);
     return type;
+    //return type.toString();
   }
 
   /**
@@ -89,7 +151,7 @@ class Fragment {
    * @returns {boolean} true if fragment's type is text/*
    */
   get isText() {
-    // TODO
+    return this.type.startsWith('text/');
   }
 
   /**
@@ -97,7 +159,11 @@ class Fragment {
    * @returns {Array<string>} list of supported mime types
    */
   get formats() {
-    // TODO
+    let formats = [];
+    if (this.type.startsWith('text/plain')) {
+      formats = ['text/plain'];
+    }
+    return formats;
   }
 
   /**
@@ -106,7 +172,18 @@ class Fragment {
    * @returns {boolean} true if we support this Content-Type (i.e., type/subtype)
    */
   static isSupportedType(value) {
-    // TODO
+    let validTypes = [
+      'text/plain',
+      'text/plain; charset=utf-8',
+      `text/markdown`,
+      `text/html`,
+      `application/json`,
+      `image/png`,
+      `image/jpeg`,
+      `image/webp`,
+      `image/gif`,
+    ];
+    return validTypes.includes(value);
   }
 }
 
