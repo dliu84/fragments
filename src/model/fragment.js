@@ -37,12 +37,12 @@ class Fragment {
       this.save();
     } else {
       if (!ownerId) {
-        throw new Error(`Fragment ownerId is missing`);
+        throw new Error(`Fragment missing ownerId not found!`);
       }
       if (!type) {
-        throw new Error(`Fragment type is missing!`);
+        throw new Error(`Fragment missing type not found!`);
       } else {
-        throw new Error('Fragment type or size is wrong!');
+        throw new Error('Fragment type or size is wrong');
       }
     }
   }
@@ -54,10 +54,9 @@ class Fragment {
    * @returns Promise<Array<Fragment>>
    */
   static async byUser(ownerId, expand = false) {
-    //return listFragments(ownerId, expand);
-
-    const fragments = await listFragments(ownerId, expand);
-    return fragments || [];
+    // const fragments = await listFragments(ownerId, expand);
+    // return fragments || [];
+    return listFragments(ownerId, expand);
   }
 
   /**
@@ -69,10 +68,8 @@ class Fragment {
   static async byId(ownerId, id) {
     const fragment = await readFragment(ownerId, id);
     if (!fragment) {
-      throw new Error(`Fragment ${id} is not found!`);
+      throw new Error(`Fragment ${id} not found!`);
     }
-
-    // construct a new Fragment instance
     const newFragment = new Fragment({
       id: fragment.id,
       ownerId: fragment.ownerId,
@@ -99,8 +96,6 @@ class Fragment {
    * @returns Promise<void>
    */
   save() {
-    // this.updated = new Date().toString();
-    // return writeFragment(this);
     this.updated = new Date().toString();
     return writeFragment(this);
   }
@@ -119,13 +114,6 @@ class Fragment {
    * @returns Promise<void>
    */
   async setData(data) {
-    // if (Buffer.isBuffer(data)) {
-    //   this.updated = new Date().toString();
-    //   this.size = Buffer.byteLength(data);
-    //   return writeFragmentData(this.ownerId, this.id, data);
-    // } else {
-    //   throw new Error(`Data is Empty!`);
-    // }
     if (Buffer.isBuffer(data)) {
       this.updated = new Date().toString();
       this.size = Buffer.byteLength(data);
@@ -142,8 +130,8 @@ class Fragment {
    */
   get mimeType() {
     const { type } = contentType.parse(this.type);
-    return type;
-    //return type.toString();
+    //return type;
+    return type.toString();
   }
 
   /**
