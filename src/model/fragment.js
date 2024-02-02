@@ -24,17 +24,6 @@ class Fragment {
         size >= 0) ||
       /;\s*charset=/.test(type)
     ) {
-      // if (!size) {
-      //   this.size = 0;
-      // } else {
-      //   this.size = size;
-      // }
-      // this.id = id || randomUUID();
-      // this.ownerId = ownerId;
-      // this.created = created || new Date().toString();
-      // this.update = updated || new Date().toString();
-      // this.type = type;
-      // this.save();
       this.id = id || randomUUID();
       this.ownerId = ownerId;
       this.created = created || new Date();
