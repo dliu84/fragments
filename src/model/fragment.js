@@ -29,12 +29,18 @@ class Fragment {
       } else {
         this.size = size;
       }
+      // this.id = id || randomUUID();
+      // this.ownerId = ownerId;
+      // this.created = created || new Date().toString();
+      // this.update = updated || new Date().toString();
+      // this.type = type;
+      // this.save();
       this.id = id || randomUUID();
       this.ownerId = ownerId;
-      this.created = created || new Date().toString();
-      this.update = updated || new Date().toString();
+      this.created = created || new Date();
+      this.updated = updated || new Date();
       this.type = type;
-      this.save();
+      size ? (this.size = size) : (this.size = 0);
     } else {
       if (!ownerId) {
         throw new Error(`Fragment missing ownerId not found!`);
@@ -70,15 +76,16 @@ class Fragment {
     if (!fragment) {
       throw new Error(`Fragment ${id} not found!`);
     }
-    const newFragment = new Fragment({
-      id: fragment.id,
-      ownerId: fragment.ownerId,
-      created: fragment.created,
-      update: fragment.update,
-      type: fragment.type,
-      size: fragment.size,
-    });
-    return Promise.resolve(newFragment);
+    // const newFragment = new Fragment({
+    //   id: fragment.id,
+    //   ownerId: fragment.ownerId,
+    //   created: fragment.created,
+    //   update: fragment.update,
+    //   type: fragment.type,
+    //   size: fragment.size,
+    // });
+    //return Promise.resolve(newFragment);
+    return fragment;
   }
 
   /**
