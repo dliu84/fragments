@@ -24,11 +24,11 @@ class Fragment {
         size >= 0) ||
       /;\s*charset=/.test(type)
     ) {
-      if (!size) {
-        this.size = 0;
-      } else {
-        this.size = size;
-      }
+      // if (!size) {
+      //   this.size = 0;
+      // } else {
+      //   this.size = size;
+      // }
       // this.id = id || randomUUID();
       // this.ownerId = ownerId;
       // this.created = created || new Date().toString();
