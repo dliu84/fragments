@@ -5,8 +5,6 @@ const { createSuccessResponse, createErrorResponse } = require('../../response')
 const { Fragment } = require('../../model/fragment');
 const logger = require('../../logger');
 
-const apiURL = process.env.API_URL;
-
 /**
  * Post a fragments for the current user
  */
@@ -14,6 +12,7 @@ module.exports = async (req, res) => {
   const user = req.user;
   const data = req.body;
   const type = req.headers['content-type'];
+  const apiURL = process.env.API_URL || `http://${req.headers.host}`;
 
   logger.debug(`Post: ${req.body}`);
 
