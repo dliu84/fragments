@@ -35,4 +35,10 @@ const rawBody = () =>
 // You can use Buffer.isBuffer(req.body) to test if it was parsed by the raw body parser.
 router.post('/fragments', rawBody(), require('./post'));
 
+/**
+ * GET /v1/fragments/:id
+ * Gets an authenticated user's fragment data (i.e., raw binary data) with the given id.
+ */
+router.get('/fragments/:id', require('./getById'));
+
 module.exports = router;
