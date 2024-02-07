@@ -51,7 +51,7 @@ class Fragment {
   static async byUser(ownerId, expand = false) {
     // const fragments = await listFragments(ownerId, expand);
     // return fragments || [];
-    return listFragments(ownerId, expand);
+    return await listFragments(ownerId, expand);
   }
 
   /**
@@ -110,13 +110,21 @@ class Fragment {
    * @returns Promise<void>
    */
   async setData(data) {
-    if (Buffer.isBuffer(data)) {
-      this.updated = new Date().toString();
-      this.size = Buffer.byteLength(data);
-      return writeFragmentData(this.ownerId, this.id, data);
-    } else {
-      throw new Error(`Data is Empty!`);
+    // if (Buffer.isBuffer(data)) {
+    //   this.updated = new Date().toString();
+    //   this.size = Buffer.byteLength(data);
+    //   return writeFragmentData(this.ownerId, this.id, data);
+    // } else {
+    //   throw new Error(`Data is Empty!`);
+    // }
+    if (!data) {
+      throw new Error('setData need a Buffer passed as parameter');
     }
+    this.size = data.length;
+
+    this.updated = new Date().toISOString();
+    await this.save();
+    return await writeFragmentData(this.ownerId, this.id, data);
   }
 
   /**

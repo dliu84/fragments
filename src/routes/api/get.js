@@ -4,7 +4,8 @@
  * Get a list of fragments for the current user
  */
 
-const { createSuccessResponse, createErrorResponse } = require('../../response');
+const { createSuccessResponse } = require('../../response');
+
 const { Fragment } = require('../../model/fragment');
 const logger = require('../../logger');
 
@@ -20,12 +21,22 @@ const logger = require('../../logger');
 //   );
 // };
 module.exports = async (req, res) => {
-  try {
-    logger.debug(`req.query: ${JSON.stringify(req.query)}`);
-    const expand = !!(req.query.expand && req.query.expand === '1');
-    const fragment = await Fragment.byUser(req.user, expand);
-    res.status(200).json(createSuccessResponse({ fragments: fragment }));
-  } catch (error) {
-    res.status(401).json(createErrorResponse(401, error.message));
-  }
+  // try {
+  //   logger.debug(`req.query: ${JSON.stringify(req.query)}`);
+  //   const expand = !!(req.query.expand && req.query.expand === '1');
+  //   const fragment = await Fragment.byUser(req.user, expand);
+  //   res.status(200).json(createSuccessResponse({ fragments: fragment }));
+  // } catch (error) {
+  //   res.status(401).json(createErrorResponse(401, error.message));
+  // }
+  const expand = req.query.expand;
+  logger.debug({ expand }, 'Expand from Get route');
+  const fragments = (await Fragment.byUser(req.user, expand)) || [];
+  logger.debug({ fragments }, 'List of fragments from GET route');
+
+  res.status(200).json(
+    createSuccessResponse({
+      fragments,
+    })
+  );
 };
