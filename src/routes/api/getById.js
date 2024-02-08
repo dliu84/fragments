@@ -15,7 +15,8 @@ module.exports = async (req, res) => {
   const fragmentData = await fragment.getData();
   logger.debug(`fragment Data is:${fragmentData}`);
   res.setHeader('Content-type', fragment.type);
-  res.send(fragmentData).toString('utf-8');
+  //res.send(fragmentData).toString('utf-8');
+  res.send(fragmentData);
   //res.status(200).json(createSuccessResponse({ fragmentData: fragmentData }));
   //} catch (err) {
   //res.status(404).json(createErrorResponse(404, err.message));

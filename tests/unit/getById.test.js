@@ -19,11 +19,10 @@ describe('GET /v1/fragments/:id', () => {
       .set('Content-Type', 'text/plain')
       .send('This is fragment');
     const { id } = JSON.parse(postRes.text).fragment;
-
     const getRes = await request(app)
       .get(`/v1/fragments/${id}`)
       .auth('user1@email.com', 'password1');
     expect(getRes.statusCode).toBe(200);
-    expect(getRes.body.fragmentData).toEqual('This is fragment');
+    expect(getRes.text).toEqual('This is fragment');
   });
 });
