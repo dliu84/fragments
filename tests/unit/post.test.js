@@ -48,14 +48,21 @@ describe('POST /v1/fragments', () => {
     expect(Object.keys(body.fragment)).toEqual([
       'id',
       'ownerId',
-      'size',
-      'type',
       'created',
       'updated',
+      'type',
+      'size',
     ]);
     expect(body.fragment.size).toEqual(data.byteLength);
     expect(body.fragment.type).toContain('text/plain');
   });
+
+  // If an invalid username/password pair are used, it should be denied
+  test('incorrect credentials are denied', () =>
+    request(app).post('/v1/fragments').auth('invalid@email.com', 'incorrect_password').expect(401));
+
+  // If the request is missing the Authorization header, it should be forbidden
+  test('unauthenticated requests are denied', () => request(app).post('/v1/fragments').expect(401));
 
   test('response include a Location header with a URL to GET the fragment', async () => {
     const data = Buffer.from('hello');
