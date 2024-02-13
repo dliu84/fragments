@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
 
     // Set headers
     //res.setHeader('Content-type', fragment.type);
-    res.setHeader('Location', `${apiURL}v1/fragments/${fragment.id}`);
+    res.setHeader('Location', `${apiURL}/v1/fragments/${fragment.id}`);
 
     // Return successful response
     res.status(201).json(
