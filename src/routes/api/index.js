@@ -40,5 +40,5 @@ router.post('/fragments', rawBody(), require('./post'));
  * Gets an authenticated user's fragment data (i.e., raw binary data) with the given id.
  */
 router.get('/fragments/:id', require('./getById'));
-
+router.get('/fragments/:id/info', require('./getinfo'));
 module.exports = router;
