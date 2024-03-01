@@ -4,6 +4,10 @@ const { randomUUID } = require('crypto');
 // Use https://www.npmjs.com/package/content-type to create/parse Content-Type headers
 const contentType = require('content-type');
 
+// a2:
+var md = require('markdown-it')();
+const logger = require('../logger');
+
 // Functions for working with fragment metadata/data using our DB
 const {
   readFragment,
@@ -102,6 +106,28 @@ class Fragment {
    */
   getData() {
     return readFragmentData(this.ownerId, this.id);
+  }
+
+  // a2:
+
+  /**
+   * Check for the url and convert the result
+   * @returns object
+   */
+  async convertData(data, ext2) {
+    if (ext2 == '.html') {
+      logger.debug({ data }, 'Before ToString');
+
+      data = md.render(data.toString('utf-8'));
+
+      logger.debug({ data }, 'After ToString');
+
+      data = Buffer.from(data, 'utf-8');
+
+      logger.debug({ data }, 'After Converting to Buffer again');
+    }
+
+    return data;
   }
 
   /**
