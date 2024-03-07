@@ -23,24 +23,29 @@ module.exports = async (req, res) => {
     // Generate a new Fragment metadata record based on Request
     const fragment = new Fragment({ ownerId: user, type });
 
-    // Store metadata and data
-    await fragment.setData(data);
+    try {
+      // Store metadata and data
+      await fragment.setData(data);
 
-    logger.debug(`New Fragment is created: ${fragment}`);
+      logger.debug(`New Fragment is created: ${fragment}`);
 
-    // const apiURL = new URL(req.protocol + '://' + req.headers.host) || process.env.API_URL;
-    const apiURL = process.env.API_URL || new URL(req.protocol + '://' + req.headers.host);
+      // const apiURL = new URL(req.protocol + '://' + req.headers.host) || process.env.API_URL;
+      const apiURL = process.env.API_URL || new URL(req.protocol + '://' + req.headers.host);
 
-    // Set headers
-    //res.setHeader('Content-type', fragment.type);
-    res.setHeader('Location', `${apiURL}/v1/fragments/${fragment.id}`);
+      // Set headers
+      //res.setHeader('Content-type', fragment.type);
+      res.setHeader('Location', `${apiURL}/v1/fragments/${fragment.id}`);
 
-    // Return successful response
-    res.status(201).json(
-      createSuccessResponse({
-        fragment,
-      })
-    );
+      // Return successful response
+      res.status(201).json(
+        createSuccessResponse({
+          fragment,
+        })
+      );
+    } catch (error) {
+      logger.error(`Error occurred while setting fragment data: ${error}`);
+      res.status(500).json(createErrorResponse(500, 'Internal Server Error'));
+    }
   } else {
     logger.error(`${req.headers['content-type']} is not supported Content Type`);
     res
