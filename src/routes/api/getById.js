@@ -10,17 +10,7 @@ const path = require('path');
  * Gets an authenticated user's fragment data with the given ID
  */
 module.exports = async (req, res) => {
-  // a1:
-  // logger.debug(`User and id are: ${req.user}, ${req.params.id}`);
-  // const fragment = await Fragment.byId(req.user, req.params.id);
-  // const fragmentData = await fragment.getData();
-  // logger.debug(`fragment Data is:${fragmentData}`);
-  // res.setHeader('Content-type', fragment.type);
-
-  // res.send(fragmentData);
-
   // a2:
-  //let url = req.originalUrl || req.url;
   let url = req.originalUrl;
 
   const name2 = path.basename(url);
@@ -35,7 +25,9 @@ module.exports = async (req, res) => {
     fragment = new Fragment(await Fragment.byId(req.user, req.params.id));
     data = await fragment.getData();
 
-    data = fragment.convertData(data, ext2);
+    data = await fragment.convertData(data, ext2, fragment);
+
+    console.log('the converted fragment is: ' + data);
   } catch (err) {
     logger.debug({ err }, 'Error on requesting Fragment');
     return res.status(404).json(createErrorResponse(404, ': Error requesting fragment: ' + err));

@@ -6,7 +6,7 @@ const contentType = require('content-type');
 
 // a2:
 var md = require('markdown-it')();
-const logger = require('../logger');
+//const logger = require('../logger');
 
 // Functions for working with fragment metadata/data using our DB
 const {
@@ -108,28 +108,39 @@ class Fragment {
     return readFragmentData(this.ownerId, this.id);
   }
 
-  // a2:
+  /**
+   * Check for the extension to see if it can be converted to a text type
+   * @returns bool
+   */
+  // for a2
+  checkTextExtension(ext2) {
+    const textTypes = ['plain', 'markdown', 'json', 'html'];
 
+    if (textTypes.find((element) => element == ext2)) return true;
+
+    return false;
+  }
   /**
    * Check for the url and convert the result
    * @returns object
    */
-  async convertData(data, ext2) {
-    if (ext2 == '.html') {
-      logger.debug({ data }, 'Before ToString');
+  async convertData(buffer, ext2, fragment) {
+    let data = buffer.toString('utf-8');
 
-      data = md.render(data.toString('utf-8'));
+    try {
+      if (ext2 === 'html' && fragment.mimeType.startsWith('text/')) {
+        data = md.render(data);
 
-      logger.debug({ data }, 'After ToString');
-
-      data = Buffer.from(data, 'utf-8');
-
-      logger.debug({ data }, 'After Converting to Buffer again');
+        data = Buffer.from(data, 'utf-8');
+      }
+    } catch (error) {
+      // Handle any errors that occur during conversion
+      console.error('Error converting data:', error);
+      throw new Error('Error converting data');
     }
 
     return data;
   }
-
   /**
    * Set's the fragment's data in the database
    * @param {Buffer} data
