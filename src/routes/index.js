@@ -1,7 +1,7 @@
-// src/routes/index.js
-// modifications to src/routes/index.js
-
 const express = require('express');
+
+const { hostname } = require('os');
+
 // Our authentication middleware
 const { authenticate } = require('../auth');
 
@@ -25,16 +25,14 @@ router.use(`/v1`, authenticate(), require('./api'));
  * we'll respond with a 200 OK.  If not, the server isn't healthy.
  */
 router.get('/', (req, res) => {
-  // Client's shouldn't cache this response (always request it fresh)
   res.setHeader('Cache-Control', 'no-cache');
-
-  // use the createSuccessResponse() and createErrorResponse() functions in src/response.js
-  // to rewrite all of the HTTP responses
   res.status(200).json(
     createSuccessResponse({
-      author,
+      author: 'Di Liu',
       githubUrl: 'https://github.com/dliu84/fragments',
       version,
+      // Include the hostname in the response
+      hostname: hostname(),
     })
   );
 });
