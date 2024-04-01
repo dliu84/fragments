@@ -1,13 +1,7 @@
-// src/routes/api/post.js
-//const express = require('express');
-
 const { createSuccessResponse, createErrorResponse } = require('../../response');
 const { Fragment } = require('../../model/fragment');
 const logger = require('../../logger');
 
-/**
- * Post a fragment for the current user
- */
 module.exports = async (req, res) => {
   logger.debug('accessing post route');
   if (Buffer.isBuffer(req.body) === true) {
@@ -15,35 +9,28 @@ module.exports = async (req, res) => {
     const user = req.user;
     const data = req.body;
     const type = req.headers['content-type'];
-    //const apiURL = process.env.API_URL || `http://${req.headers.host}`;
 
     logger.debug(`POST debugging: ${req.body}`);
     logger.info(`The apiURL is: http://${req.headers.host}`);
 
-    // Generate a new Fragment metadata record based on Request
     const fragment = new Fragment({ ownerId: user, type });
 
     try {
-      // Store metadata and data
       await fragment.setData(data);
 
       logger.debug(`New Fragment is created: ${fragment}`);
 
-      // const apiURL = new URL(req.protocol + '://' + req.headers.host) || process.env.API_URL;
       const apiURL = process.env.API_URL || new URL(req.protocol + '://' + req.headers.host);
 
-      // Set headers
-      //res.setHeader('Content-type', fragment.type);
       res.setHeader('Location', `${apiURL}/v1/fragments/${fragment.id}`);
 
-      // Return successful response
-      res.status(201).json(
+      return res.status(201).json(
         createSuccessResponse({
           fragment,
         })
       );
     } catch (error) {
-      logger.error(`Error occurred while setting fragment data: ${error}`);
+      logger.error(`Error occurred while setting fragment data in POST route: ${error}`);
       res.status(500).json(createErrorResponse(500, 'Internal Server Error'));
     }
   } else {
