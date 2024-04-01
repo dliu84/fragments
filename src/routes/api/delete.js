@@ -1,5 +1,3 @@
-// DELETE /fragments/:id
-
 /**
  * Delete a fragment for the current user
  */
