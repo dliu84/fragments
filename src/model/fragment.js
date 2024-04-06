@@ -30,8 +30,8 @@ class Fragment {
     ) {
       this.id = id || randomUUID();
       this.ownerId = ownerId;
-      this.created = created || new Date();
-      this.updated = updated || new Date();
+      this.created = created || new Date().toISOString();
+      this.updated = updated || new Date().toISOString();
       this.type = type;
       size ? (this.size = size) : (this.size = 0);
     } else {

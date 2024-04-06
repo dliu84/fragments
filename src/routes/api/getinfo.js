@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
   try {
     fragment = await Fragment.byId(req.user, req.params.id);
   } catch (err) {
-    return res.status(400).json(createErrorResponse('Error requesting fragment'));
+    return res.status(404).json(createErrorResponse('Error requesting fragment'));
   }
   res.set('Content-Type', fragment.type);
 
