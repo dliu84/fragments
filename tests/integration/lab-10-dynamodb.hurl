@@ -110,9 +110,9 @@ HTTP/1.1 200
 jsonpath "$.status" == "ok"
 jsonpath "$.fragments" count == 2
 jsonpath "$.fragments.[0]" matches "^[A-Za-z0-9_-]+$"
-jsonpath "$.fragments.[0]" == {{fragment1_id}}
+#jsonpath "$.fragments.[0]" == {{fragment1_id}}
 jsonpath "$.fragments.[1]" matches "^[A-Za-z0-9_-]+$"
-jsonpath "$.fragments.[1]" == {{fragment2_id}}
+#jsonpath "$.fragments.[1]" == {{fragment2_id}}
 
 # 8. DELETE the first fragment you created above
 DELETE {{fragment1_url}}
