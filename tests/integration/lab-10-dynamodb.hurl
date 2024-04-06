@@ -1,8 +1,7 @@
 # 1. POST a new JSON fragment to http://localhost:8080 as an authorized user. 
 #    The fragment's body should be the JSON value, { "service": "DynamoDB" }.
 POST http://localhost:8080/v1/fragments
-#[BasicAuth]
-#user1@email.com:password1
+
 Authorization: Basic dXNlcjFAZW1haWwuY29tOnBhc3N3b3JkMQ==
 # We're sending a JSON fragment
 Content-Type: application/json
@@ -36,7 +35,6 @@ fragment1_id: jsonpath "$.fragment.id"
 GET {{fragment1_url}}/info
 [BasicAuth]
 user1@email.com:password1
-#Authorization: Basic dXNlcjFAZW1haWwuY29tOnBhc3N3b3JkMQ==
 
 HTTP/1.1 200
 
@@ -56,8 +54,7 @@ jsonpath "$.fragment.type" == "application/json"
 # 4. POST a second Markdown fragment to http://localhost:8080 as the same authorized user. 
 #    The fragment's body should be the Markdown value, DynamoDB is **great**..
 POST http://localhost:8080/v1/fragments
-#[BasicAuth]
-#user1@email.com:password1
+
 Authorization: Basic dXNlcjFAZW1haWwuY29tOnBhc3N3b3JkMQ==
 # We're sending a markdown fragment
 Content-Type: text/markdown
@@ -91,7 +88,6 @@ fragment2_id: jsonpath "$.fragment.id"
 GET {{fragment2_url}}/info
 [BasicAuth]
 user1@email.com:password1
-#Authorization: Basic dXNlcjFAZW1haWwuY29tOnBhc3N3b3JkMQ==
 
 HTTP/1.1 200
 [Asserts]
@@ -108,7 +104,6 @@ jsonpath "$.fragment.size" == 22
 GET http://localhost:8080/v1/fragments
 [BasicAuth]
 user1@email.com:password1
-#Authorization: Basic dXNlcjFAZW1haWwuY29tOnBhc3N3b3JkMQ==
 
 HTTP/1.1 200
 [Asserts]
@@ -123,7 +118,6 @@ jsonpath "$.fragments.[1]" == {{fragment2_id}}
 DELETE {{fragment1_url}}
 [BasicAuth]
 user1@email.com:password1
-#Authorization: Basic dXNlcjFAZW1haWwuY29tOnBhc3N3b3JkMQ==
 
 # 9. Confirm that the server returns a 200
 HTTP/1.1 200
@@ -132,7 +126,6 @@ HTTP/1.1 200
 GET {{fragment1_url}}/info
 [BasicAuth]
 user1@email.com:password1
-#Authorization: Basic dXNlcjFAZW1haWwuY29tOnBhc3N3b3JkMQ==
 
 # 11. Confirm that the server returns a 404, since the fragment should be deleted.
 HTTP/1.1 404
@@ -142,7 +135,6 @@ HTTP/1.1 404
 GET http://localhost:8080/v1/fragments
 [BasicAuth]
 user1@email.com:password1
-#Authorization: Basic dXNlcjFAZW1haWwuY29tOnBhc3N3b3JkMQ==
 
 HTTP/1.1 200
 [Asserts]
