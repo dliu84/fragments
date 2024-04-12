@@ -4,9 +4,9 @@ const { randomUUID } = require('crypto');
 // Use https://www.npmjs.com/package/content-type to create/parse Content-Type headers
 const contentType = require('content-type');
 
-// a2:
 var md = require('markdown-it')();
-//const logger = require('../logger');
+const sharp = require('sharp');
+const logger = require('../logger');
 
 // Functions for working with fragment metadata/data using our DB
 const {
@@ -53,9 +53,13 @@ class Fragment {
    * @returns Promise<Array<Fragment>>
    */
   static async byUser(ownerId, expand = false) {
-    // const fragments = await listFragments(ownerId, expand);
-    // return fragments || [];
-    return await listFragments(ownerId, expand);
+    try {
+      const fragments = await listFragments(ownerId, expand);
+      return expand ? fragments.map((fragment) => new Fragment(fragment)) : fragments;
+    } catch (error) {
+      // if the user does not have fragments yet, returns an empty array
+      return [];
+    }
   }
 
   /**
@@ -65,20 +69,15 @@ class Fragment {
    * @returns Promise<Fragment>
    */
   static async byId(ownerId, id) {
-    const fragment = await readFragment(ownerId, id);
-    if (!fragment) {
-      throw new Error(`Fragment ${id} not found!`);
+    try {
+      const fragment = await readFragment(ownerId, id);
+      if (!fragment) {
+        throw new Error(`Fragment ${id} not found!`);
+      }
+      return fragment;
+    } catch (error) {
+      throw new Error(error);
     }
-    // const newFragment = new Fragment({
-    //   id: fragment.id,
-    //   ownerId: fragment.ownerId,
-    //   created: fragment.created,
-    //   update: fragment.update,
-    //   type: fragment.type,
-    //   size: fragment.size,
-    // });
-    //return Promise.resolve(newFragment);
-    return fragment;
   }
 
   /**
@@ -96,7 +95,7 @@ class Fragment {
    * @returns Promise<void>
    */
   save() {
-    this.updated = new Date().toString();
+    this.updated = new Date().toISOString();
     return writeFragment(this);
   }
 
@@ -112,34 +111,79 @@ class Fragment {
    * Check for the extension to see if it can be converted to a text type
    * @returns bool
    */
-  // for a2
   checkTextExtension(ext2) {
     const textTypes = ['plain', 'markdown', 'json', 'html'];
-
     if (textTypes.find((element) => element == ext2)) return true;
-
     return false;
   }
+
+  /**
+   * Check for the extension to see if it can be converted to a image type
+   * @returns bool
+   */
+  checkImageExtension(ext2) {
+    const imageTypes = ['png', 'jpeg', 'webp', 'gif'];
+    if (imageTypes.find((element) => element == ext2)) return true;
+    return false;
+  }
+
   /**
    * Check for the url and convert the result
    * @returns object
    */
   async convertData(buffer, ext2, fragment) {
-    let data = buffer.toString('utf-8');
+    let data;
 
     try {
-      if (ext2 === 'html' && fragment.mimeType.startsWith('text/')) {
-        data = md.render(data);
-
-        data = Buffer.from(data, 'utf-8');
+      if (this.checkImageExtension(ext2)) {
+        data = await sharp(buffer).toFormat(ext2).toBuffer();
+        return data;
       }
-    } catch (error) {
-      // Handle any errors that occur during conversion
-      console.error('Error converting data:', error);
-      throw new Error('Error converting data');
+    } catch (err) {
+      throw 'Error parsing image in src/model/fragment.js';
     }
 
-    return data;
+    //markdown-it
+    if (this.checkTextExtension(ext2)) {
+      if (ext2 == 'html' && fragment.mimeType.startsWith('text/')) {
+        data = buffer;
+
+        logger.debug({ data }, 'Before markdown-it ToString in src/model/fragments.js');
+
+        data = md.render(data.toString('utf-8'));
+
+        logger.debug({ data }, 'After markdown-it ToString in src/model/fragments.js');
+
+        data = Buffer.from(data, 'utf-8');
+
+        logger.debug({ data }, 'After Converting to Buffer again in src/model/fragments.js');
+
+        return data;
+      }
+
+      //json extension
+      if (
+        ext2 == 'json' &&
+        (fragment.mimeType.startsWith('text/') || fragment.mimeType.startsWith('application'))
+      ) {
+        data = buffer;
+
+        data = JSON.parse(data.toString('utf-8'));
+
+        data = Buffer.from(JSON.stringify(data), 'utf-8');
+
+        logger.debug({ data }, 'After Converting to Buffer again in src/model/fragments.js');
+
+        return data;
+      }
+
+      // plain text
+      if (ext2 == 'plain' && fragment.mimeType.startsWith('text/')) {
+        return data;
+      }
+    } else {
+      throw new Error();
+    }
   }
   /**
    * Set's the fragment's data in the database
@@ -147,21 +191,21 @@ class Fragment {
    * @returns Promise<void>
    */
   async setData(data) {
-    // if (Buffer.isBuffer(data)) {
-    //   this.updated = new Date().toString();
-    //   this.size = Buffer.byteLength(data);
-    //   return writeFragmentData(this.ownerId, this.id, data);
-    // } else {
-    //   throw new Error(`Data is Empty!`);
-    // }
-    if (!data) {
-      throw new Error('setData need a Buffer passed as parameter');
-    }
-    this.size = data.length;
+    try {
+      if (!data || data == undefined) {
+        throw new Error('setData need a Buffer passed as parameter');
+      }
 
-    this.updated = new Date().toISOString();
-    await this.save();
-    return await writeFragmentData(this.ownerId, this.id, data);
+      this.size = data.byteLength;
+
+      this.updated = new Date().toISOString();
+
+      await this.save();
+
+      return await writeFragmentData(this.ownerId, this.id, data);
+    } catch (err) {
+      return Promise.reject(new Error('Error in setData:', err));
+    }
   }
 
   /**
@@ -171,7 +215,6 @@ class Fragment {
    */
   get mimeType() {
     const { type } = contentType.parse(this.type);
-    //return type;
     return type.toString();
   }
 
@@ -188,11 +231,16 @@ class Fragment {
    * @returns {Array<string>} list of supported mime types
    */
   get formats() {
-    let formats = [];
-    if (this.type.startsWith('text/plain')) {
-      formats = ['text/plain'];
-    }
-    return formats;
+    return [
+      'text/plain',
+      'application/json',
+      'text/markdown',
+      'text/html',
+      'image/png',
+      'image/jpeg',
+      'image/webp',
+      'image/gif',
+    ];
   }
 
   /**
