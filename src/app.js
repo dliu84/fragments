@@ -70,15 +70,6 @@ app.use((err, req, res, next) => {
     logger.error({ err }, `Error processing request`);
   }
 
-  // res.status(status).json({
-  //   status: 'error',
-  //   error: {
-  //     message,
-  //     code: status,
-  //   },
-  // });
-
-  // step 42
   res.status(status).json(createErrorResponse(status, message));
 });
 
