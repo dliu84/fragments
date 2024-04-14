@@ -242,22 +242,14 @@ class Fragment {
       formats = ['text/html'];
     } else if (this.type.startsWith('image/png')) {
       formats = ['image/png'];
+    } else if (this.type.startsWith('image/jpeg')) {
+      formats = ['image/jpeg'];
     } else if (this.type.startsWith('image/webp')) {
       formats = ['image/webp'];
     } else if (this.type.startsWith('image/gif')) {
       formats = ['image/gif'];
     }
     return formats;
-    // return [
-    //   'text/plain',
-    //   'application/json',
-    //   'text/markdown',
-    //   'text/html',
-    //   'image/png',
-    //   'image/jpeg',
-    //   'image/webp',
-    //   'image/gif',
-    // ];
   }
 
   /**
