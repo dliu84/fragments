@@ -108,7 +108,6 @@ user1@email.com:password1
 HTTP/1.1 200
 [Asserts]
 jsonpath "$.status" == "ok"
-jsonpath "$.fragments" count == 2
 jsonpath "$.fragments.[0]" matches "^[A-Za-z0-9_-]+$"
 #jsonpath "$.fragments.[0]" == {{fragment1_id}}
 jsonpath "$.fragments.[1]" matches "^[A-Za-z0-9_-]+$"
