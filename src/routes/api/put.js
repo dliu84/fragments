@@ -1,5 +1,3 @@
-// PUT /fragments:id can update an authenticated user's existing fragment
-
 const { createSuccessResponse, createErrorResponse } = require('../../response');
 const API_URL = process.env.API_URL;
 const { Fragment } = require('../../model/fragment');

@@ -234,6 +234,18 @@ class Fragment {
     let formats = [];
     if (this.type.startsWith('text/plain')) {
       formats = ['text/plain'];
+    } else if (this.type.startsWith('application/json')) {
+      formats = ['application/json'];
+    } else if (this.type.startsWith('text/markdown')) {
+      formats = ['text/markdown'];
+    } else if (this.type.startsWith('text/html')) {
+      formats = ['text/html'];
+    } else if (this.type.startsWith('image/png')) {
+      formats = ['image/png'];
+    } else if (this.type.startsWith('image/webp')) {
+      formats = ['image/webp'];
+    } else if (this.type.startsWith('image/gif')) {
+      formats = ['image/gif'];
     }
     return formats;
     // return [
