@@ -1,4 +1,22 @@
-# fragments
+# Fragments Microservice
+
+## Overview
+
+## Key Features
+
+## Technology Stack
+
+## Project Structure
+
+## Installation and Setup
+
+## Build and Run
+
+## Contributors  
+
+- **Professor David Humphrey** (Instructor, Seneca Polytechnic, CCP555, 2024 Winter)  
+- **Di Liu** - [dliu84](https://github.com/dliu84)  
+
 CCP555 course works - Lab 1
 
 GitHub repo and local machine:
