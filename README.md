@@ -48,7 +48,7 @@ The **Fragments Microservice** is a cloud-native application built using Node.js
 - **Professor David Humphrey** (Instructor, Seneca Polytechnic, CCP555, 2024 Winter)  
 - **Di Liu** - [dliu84](https://github.com/dliu84)  
 
-CCP555 course works - Lab 1
+<!--CCP555 course works - Lab 1
 
 GitHub repo and local machine:
 - create a private GitHub repo, add README file and .gitignore for node file
@@ -91,5 +91,5 @@ run debugger
 - 1. set a break point in VScode
 - 2. in VScode, run -> start debugging
 - 3. in another terminal, run:
-     - curl localhost:8080, and the break point will be hit
+     - curl localhost:8080, and the break point will be hit-->
 
