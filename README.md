@@ -1,16 +1,47 @@
 # Fragments Microservice
 
 ## Overview
+The **Fragments Microservice** is a cloud-native application built using Node.js, Express, and AWS cloud services, designed to allow authenticated users to create, store, manage, and convert data fragments (text, JSON, Markdown, images). It follows modern software engineering practices including microservices, containerization, CI/CD automation, and cloud deployment.
 
 ## Key Features
-
+### Secure API Development
+- Implemented RESTful API with Express.js, Passport.js, and AWS Cognito authentication (OAuth2 + Basic Auth).
+- Applied structured logging with Pino, dotenv for configuration, and environment-based setups.
+### Data Persistence
+- Started with In-Memory DB, then migrated to AWS DynamoDB (metadata) and AWS S3 (fragment data).
+- Enabled support for multiple fragment types: text/*, application/json, and images with type conversions.
+### Testing & Quality Assurance
+- Built unit tests with Jest & Supertest for API validation.
+- Added integration tests with Hurl + Docker Compose for end-to-end scenarios.
+- Maintained 85%+ coverage across all releases with automated GitHub Actions workflows.
+### DevOps & Cloud Deployment
+- Designed multi-stage Dockerfiles for both API and UI to produce minimal production images.
+- Published Docker images to Docker Hub and later to Amazon ECR.
+- Automated builds, tests, and deployments with CI/CD pipelines in GitHub Actions.
+- Deployed microservice to AWS EC2 (Assignment 1), Docker Hub + EC2 (Assignment 2), and ECS with load balancer + CloudWatch logging (Assignment 3).
+### Front-End Web UI
+- Built a lightweight testing UI for fragment creation & retrieval.
+- Integrated AWS Cognito Hosted UI for secure login.
+- Allowed fragment creation, listing, updating, conversion, and deletion through the web client.
+  
 ## Technology Stack
+- **Languages & Frameworks**: Node.js, Express.js, Passport.js, Markdown-it, Sharp
+- **Cloud Services**: AWS EC2, ECS, ECR, S3, DynamoDB, Cognito, CloudWatch
+- **DevOps & Tools**: Docker, Docker Hub, GitHub Actions (CI/CD), dotenv, Pino logging
+- **Testing**: Jest, Supertest, Hurl, Integration with Docker Compose
+  
+## Deliverables
+- **GitHub Repositories**:
+- #### fragments (API microservice)
+- #### fragments-ui (frontend testing UI)
+- **Docker Images**: Hosted on Docker Hub and AWS ECR
+- **AWS Deployment**: Final system deployed on Elastic Container Service (ECS) with load balancer
+- **Documentation**: Technical reports (Assignments 1–3) with screenshots, coverage reports, and system walkthrough
 
-## Project Structure
-
-## Installation and Setup
-
-## Build and Run
+## Learning Outcomes
+- Gained hands-on experience with cloud-native app development, from local prototyping to full AWS deployment.
+- Practiced CI/CD pipelines, automated testing, and best practices in containerization.
+- Strengthened skills in distributed systems, cloud security, and scalable architecture.
 
 ## Contributors  
 
