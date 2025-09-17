@@ -46,7 +46,15 @@ The **Fragments Microservice** is a cloud-native application built using Node.js
 ## Contributors  
 
 - **Professor David Humphrey** (Instructor, Seneca Polytechnic, CCP555, 2024 Winter)  
-- **Di Liu** - [dliu84](https://github.com/dliu84)  
+- **Di Liu** - [dliu84](https://github.com/dliu84)
+
+## Citation
+
+If you use this project in your work, please cite it as follows:
+> Di Liu (2025). *Fragments Microservice*. GitHub. [https://github.com/dliu84/fragments](https://github.com/dliu84/fragments)
+
+For more details, see the [CITATION.cff](./CITATION.cff) file.
+
 
 <!--CCP555 course works - Lab 1
 
