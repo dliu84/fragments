@@ -5,7 +5,7 @@ The **Fragments Microservice** is a cloud-native application built using Node.js
 
 ## Key Features
 - **Secure API Development**
-	- Implemented RESTful API with Express.js, Passport.js, and AWS Cognito authentication (OAuth2 + Basic Auth).
+	- Implemented RESTful API with Express.js, Passport.js, and AWS Cognito authentication.
 	- Applied structured logging with Pino, dotenv for configuration, and environment-based setups.
 - **Data Persistence**
 	- Started with In-Memory DB, then migrated to AWS DynamoDB (metadata) and AWS S3 (fragment data).
