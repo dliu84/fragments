@@ -18,7 +18,7 @@ The **Fragments Microservice** is a cloud-native application built using Node.js
 	- Designed multi-stage Dockerfiles for both API and UI to produce minimal production images.
 	- Published Docker images to Docker Hub and later to Amazon ECR.
 	- Automated builds, tests, and deployments with CI/CD pipelines in GitHub Actions.
-	- Deployed microservice to AWS EC2 (Assignment 1), Docker Hub + EC2 (Assignment 2), and ECS with load balancer (Assignment 3).
+	- Deployed to AWS EC2 (Assignment 1), Docker Hub + EC2 (Assignment 2), and ECS with load balancer (Assignment 3).
 - **Front-End Web UI**
 	- Built a lightweight testing UI for fragment creation & retrieval.
 	- Integrated AWS Cognito Hosted UI for secure login.
