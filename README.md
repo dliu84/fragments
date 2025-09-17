@@ -32,8 +32,8 @@ The **Fragments Microservice** is a cloud-native application built using Node.js
   
 ## Deliverables
 - **GitHub Repositories**:
-- `fragments` (API microservice)
-- `fragments-ui` (frontend testing UI)
+	- fragments (API microservice)
+	- fragments-ui (frontend testing UI)
 - **Docker Images**: Hosted on Docker Hub and AWS ECR
 - **AWS Deployment**: Final system deployed on Elastic Container Service (ECS) with load balancer
 - **Documentation**: Technical reports (Assignments 1–3) with screenshots, coverage reports, and system walkthrough
